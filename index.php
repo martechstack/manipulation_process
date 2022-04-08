@@ -96,7 +96,7 @@ function createSubscribers() {
 function getLastList() {
     $sql = "SELECT list_id FROM mailwizz.mw_list ORDER BY list_id DESC LIMIT 1";
     $result = runQuery($sql);
-    echo '<pre>'; print_r([    $result    ]); echo die;
+    echo '<pre>'; print_r([    $result->fetch_object()    ]); echo die;
 
 }
 ?>
