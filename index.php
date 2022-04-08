@@ -21,7 +21,6 @@ function getConnect() {
 function runQuery($sql) {
     $conn = getConnect();
     if ($result = mysqli_query($conn, $sql)) {
-        echo 'success';
     } else {
         echo "\n<br/>Error: " . $sql . "<br>" . mysqli_error($conn);
     }
@@ -63,7 +62,7 @@ function createSubscribers($data){
 function createSubscriber($datum) {
     $lastListId = getLastListId();
     $subscriber_uid = generateRandomString();
-    $email = $datum->email;
+    $email = $datum->Email;
     $time = timeNow();
 
     $sql = "INSERT INTO mailwizz.mw_list_subscriber
