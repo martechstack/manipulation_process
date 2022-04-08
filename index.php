@@ -13,13 +13,14 @@ if (!$conn) {
 echo "Connected successfully";
 
 $sql = "SELECT * from mailwizz.mw_list";
+$ar = [];
 if ($result = mysqli_query($conn, $sql)) {
-echo '<pre>'; print_r([    $result -> fetch_object()    ]); echo die;
+        while ($obj = $result -> fetch_object()) {
+            $ar[] = $obj;
+        }
 
-//        while ($obj = $result -> fetch_object()) {
-//            printf("%s (%s)\n", $obj->Lastname, $obj->Age);
-//        }
-
+        echo '<pre>'; print_r([    $ar    ]); echo die;
+        
     echo "New record created successfully";
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
