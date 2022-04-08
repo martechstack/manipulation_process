@@ -19,7 +19,6 @@ echo '<pre>'; print_r([    $result -> fetch_object()    ]); echo die;
 //        while ($obj = $result -> fetch_object()) {
 //            printf("%s (%s)\n", $obj->Lastname, $obj->Age);
 //        }
-    }
 
     echo "New record created successfully";
 } else {
