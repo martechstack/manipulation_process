@@ -14,8 +14,7 @@ function getConnect() {
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    echo "Connected successfully";
-    
+
     return $conn;
 }
 function runQuery($sql) {
@@ -50,14 +49,9 @@ function generateRandomString($length = 13) {
 function createSubscribers($data){
     foreach ($data as $key => $datum) {
         createSubscriber($datum);
-        //todo
-        if($key <=3) {
-            break;
-        }
     }
-
-    echo '';
-    echo PHP_EOL . "Done successfully: $key subscribers";
+    
+    echo PHP_EOL . "Done successfully: $key +1 subscribers";
 }
 function createSubscriber($datum) {
     $lastListId = getLastListId();
@@ -69,6 +63,8 @@ function createSubscriber($datum) {
     (subscriber_id, subscriber_uid, list_id, email, ip_address, source, status, date_added, last_updated) VALUES
     (NULL, '$subscriber_uid', $lastListId, '$email', '', 'import', 'confirmed', '$time', '$time');";
 
+    echo '<pre>'; print_r([    $sql    ]); echo die;
+    
     runQuery($sql);
 
     return $subscriber_uid;
@@ -86,7 +82,7 @@ function getLastListId() {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all";
+    $sql = "SELECT * FROM mailwizz.data_all LIMIT 1";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
