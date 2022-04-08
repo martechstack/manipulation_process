@@ -63,7 +63,7 @@ function createSubscribers($data){
 function createSubscriber($datum) {
     $lastListId = getLastListId();
     $subscriber_uid = generateRandomString();
-    $email = $datum['email'];
+    $email = $datum->email;
     $time = timeNow();
 
     $sql = "INSERT INTO mailwizz.mw_list_subscriber
@@ -71,6 +71,8 @@ function createSubscriber($datum) {
     (NULL, '$subscriber_uid', $lastListId, '$email', '', 'import', 'confirmed', '$time', '$time');";
 
     runQuery($sql);
+
+    return $subscriber_uid;
 }
 function getLastListId() {
     $sql = "SELECT list_id FROM mailwizz.mw_list ORDER BY list_id DESC LIMIT 1";
