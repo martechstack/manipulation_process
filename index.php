@@ -12,16 +12,17 @@ if (!$conn) {
 
 echo "Connected successfully";
 
-$sql = "SELECT * from mailwizz.mw_list";
+$sql = "SELECT * from mailwizz.data_all";
 $ar = [];
 if ($result = mysqli_query($conn, $sql)) {
-        while ($obj = $result -> fetch_object()) {
-            $ar[] = $obj;
-        }
+    while ($obj = $result->fetch_object()) {
+        $ar[] = $obj;
+    }
 
-        echo '<pre>'; print_r([    $ar    ]); echo die;
-        
-    echo "New record created successfully";
+    echo '<pre>';
+    print_r([$ar]);
+    echo die;
+
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
