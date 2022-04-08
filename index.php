@@ -25,8 +25,7 @@ $data = [
         'Used' => 0,
     ],
 ];
-createList($data);
-
+getLastList();
 
 $conn = getConnect();
 $sql = "SELECT * from mailwizz.data_all";
@@ -62,24 +61,24 @@ function getConnect() {
 function runQuery($sql) {
     $conn = getConnect();
     if ($result = mysqli_query($conn, $sql)) {
-        echo '<pre>'; print_r([   'success', $result    ]); echo die;
+        echo 'success';
     } else {
         echo "\n<br/>Error: " . $sql . "<br>" . mysqli_error($conn);
     }
-}
 
-function createList($data) {
+    return $result;
+}
+function createList() {
     $list_uid = generateRandomString(13);
     $name = date('Fd_') . 'T' . date('Gi') . '_Many';
-    
+    $time = date('Y-m-d G:i:s');
+
     $sql = "INSERT INTO mailwizz.mw_list
-            (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status) VALUES
-            (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active');";
+            (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status, date_added, last_updated) VALUES
+            (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active', '$time', '$time');";
 
     echo '<pre>'; print_r([    runQuery($sql)    ]); echo die;
-    
 }
-
 function generateRandomString($length = 13) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $charactersLength = strlen($characters);
@@ -88,5 +87,16 @@ function generateRandomString($length = 13) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+function createSubscribers() {
+    $sql = "INSERT INTO mailwizz.mw_list_subscriber
+(subscriber_id, subscriber_uid, list_id, email, ip_address, source, status, date_added, last_updated) VALUES
+(NULL, 't9ra10myx24c7', 89, '8582422271@vtext.com', '', 'import', 'confirmed', '2022-04-07 20:37:55', '2022-04-07 20:37:55');";
+}
+function getLastList() {
+    $sql = "SELECT list_id FROM mailwizz.mw_list ORDER BY list_id DESC LIMIT 1";
+    $result = runQuery($sql);
+    echo '<pre>'; print_r([    $result    ]); echo die;
+
 }
 ?>
