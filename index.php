@@ -27,21 +27,7 @@ $data = [
 ];
 getLastList();
 
-$conn = getConnect();
-$sql = "SELECT * from mailwizz.data_all";
-$ar = [];
-if ($result = mysqli_query($conn, $sql)) {
-    while ($obj = $result->fetch_object()) {
-        $ar[] = $obj;
-    }
 
-    echo '<pre>';
-    print_r([$ar]);
-    echo die;
-
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
 mysqli_close($conn);
 
 function getConnect() {
@@ -89,14 +75,34 @@ function generateRandomString($length = 13) {
     return $randomString;
 }
 function createSubscribers() {
+    $lastListId = getLastListId();
+    $subscriber_uid = generateRandomString();
+
     $sql = "INSERT INTO mailwizz.mw_list_subscriber
 (subscriber_id, subscriber_uid, list_id, email, ip_address, source, status, date_added, last_updated) VALUES
-(NULL, 't9ra10myx24c7', 89, '8582422271@vtext.com', '', 'import', 'confirmed', '2022-04-07 20:37:55', '2022-04-07 20:37:55');";
+(NULL, '$subscriber_uid', $lastListId, '8582422271@vtext.com', '', 'import', 'confirmed', '2022-04-07 20:37:55', '2022-04-07 20:37:55');";
 }
-function getLastList() {
+function getLastListId() {
     $sql = "SELECT list_id FROM mailwizz.mw_list ORDER BY list_id DESC LIMIT 1";
     $result = runQuery($sql);
-    echo '<pre>'; print_r([    $result->fetch_object()->list_id    ]); echo die;
+    if(!empty($result)){
+        $resObj = $result->fetch_object();
+        if(!empty($resObj)) {
+            return $resObj->list_id;
+        }
+    }
 
+    throw new Exception('Cannot get list id...');
+}
+function getDataAll() {
+    $sql = "SELECT * FROM mailwizz.data_all";
+    $result = runQuery($sql);
+    while ($obj = $result->fetch_object()) {
+        $ar[] = $obj;
+    }
+
+    echo '<pre>';
+    print_r([$ar]);
+    echo die;
 }
 ?>
