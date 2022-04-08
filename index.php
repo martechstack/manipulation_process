@@ -25,7 +25,7 @@ $data = [
         'Used' => 0,
     ],
 ];
-getLastList();
+getDataAll();
 
 
 mysqli_close($conn);
