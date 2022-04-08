@@ -84,7 +84,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all LIMIT 1";
+    $sql = "SELECT * FROM mailwizz.data_all LIMIT 2";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
