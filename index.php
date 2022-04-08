@@ -28,7 +28,6 @@ $data = [
 getDataAll();
 
 
-mysqli_close($conn);
 
 function getConnect() {
     $servername = "localhost";
