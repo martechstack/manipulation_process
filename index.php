@@ -1,7 +1,8 @@
 <?php
 
-//createList();
-createSubscribers(getDataAll());
+$listUid = createList();
+$listId = getListIdByUid($listUid);
+createSubscribers($listId, getDataAll());
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
@@ -35,7 +36,11 @@ function createList() {
             (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status, date_added, last_updated) VALUES
             (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active', '$time', '$time');";
 
-    echo '<pre>'; print_r([    runQuery($sql)    ]); echo die;
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create List: ' . $sql);
+    }
+
+    return $list_uid;
 }
 function generateRandomString($length = 13) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -46,31 +51,28 @@ function generateRandomString($length = 13) {
     }
     return $randomString;
 }
-function createSubscribers($data){
+function createSubscribers($listId, $data){
     foreach ($data as $key => $datum) {
-        createSubscriber($datum);
+        createSubscriber($listId,$datum);
     }
     
     echo PHP_EOL . "Done successfully: $key +1 subscribers";
 }
-function createSubscriber($datum) {
-    $lastListId = getLastListId();
+function createSubscriber($listId,$datum) {
     $subscriber_uid = generateRandomString();
     $email = $datum->Email;
     $time = timeNow();
 
     $sql = "INSERT INTO mailwizz.mw_list_subscriber
     (subscriber_id, subscriber_uid, list_id, email, ip_address, source, status, date_added, last_updated) VALUES
-    (NULL, '$subscriber_uid', $lastListId, '$email', '', 'import', 'confirmed', '$time', '$time');";
+    (NULL, '$subscriber_uid', $listId, '$email', '', 'import', 'confirmed', '$time', '$time');";
 
-    echo '<pre>'; print_r([    $sql    ]); echo die;
-    
     runQuery($sql);
 
     return $subscriber_uid;
 }
-function getLastListId() {
-    $sql = "SELECT list_id FROM mailwizz.mw_list ORDER BY list_id DESC LIMIT 1";
+function getListIdByUid($list_uid) {
+    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE uid='$list_uid'";
     $result = runQuery($sql);
     if(!empty($result)){
         $resObj = $result->fetch_object();
