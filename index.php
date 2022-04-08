@@ -72,7 +72,7 @@ function createSubscriber($listId,$datum) {
     return $subscriber_uid;
 }
 function getListIdByUid($list_uid) {
-    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE uid='$list_uid'";
+    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE list_uid='$list_uid'";
     $result = runQuery($sql);
     if(!empty($result)){
         $resObj = $result->fetch_object();
