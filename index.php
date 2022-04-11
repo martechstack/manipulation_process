@@ -142,7 +142,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 226";
+    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 451";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
