@@ -14,6 +14,7 @@ foreach ($uids as $uid) {
     deleteListDefault($listId);
     deleteListNotification($listId);
     deleteListField($listId);
+    deleteList($listId);
 
     echo " Deleted: $uid ";
 }
