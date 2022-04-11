@@ -4,6 +4,7 @@ $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
     createListDefault($listId);
+    createListNotification($listId);
     createListFields($listId);
     $fields = getFieldsByListId($listId);
     if (empty($fields)) {
@@ -87,6 +88,13 @@ function createListDefault($listId) {
         throw new Exception('Cannot create List Default: ' . $sql);
     }
 }
+function createListNotification($listId) {
+    $sql = "INSERT INTO mailwizz.mw_list_customer_notification (list_id, daily, subscribe, unsubscribe, daily_to, subscribe_to, unsubscribe_to) VALUES ($listId, 'no', 'no', 'no', null, '', '');";
+
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create List 1Notification: ' . $sql);
+    }
+}
 function generateRandomString($length = 13) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $charactersLength = strlen($characters);
@@ -134,7 +142,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 226";
+    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 451";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
