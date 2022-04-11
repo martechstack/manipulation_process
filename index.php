@@ -177,6 +177,7 @@ function getFieldId($fields, $label){
 }
 function findSubscriberInData($dataAll, $subscriber){
     foreach ($dataAll as $datum) {
+        echo '<pre>'; print_r([    $datum, $subscriber, $datum->Email, $subscriber->Email    ]); echo die;
         if ($datum->Email == $subscriber->Email) {
             return $datum;
         }
