@@ -6,7 +6,7 @@ if ($listId = getListIdByUid($listUid)) {
     $dataAll = getDataAll();
     if (!empty($dataAll)) {
         $createdSubscribersCount = createSubscribers($listId, $dataAll);
-        $subscribers = getSubscribersByListIdsubscriber_uid($listId);
+        $subscribers = getSubscribersByListId($listId);
         createListFieldValue($dataAll);
     }
 }
