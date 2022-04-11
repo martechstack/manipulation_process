@@ -29,6 +29,8 @@ function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
     $config = require_once 'config.php';
 
+    echo '<pre>'; print_r([    $config    ]); echo die;
+    
     $conn = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['database']);
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
