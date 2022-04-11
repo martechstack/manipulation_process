@@ -43,11 +43,12 @@ function createList() {
             (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status, date_added, last_updated) VALUES
             (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active', '$time', '$time');";
     $result = runQuery($sql);
-    if(!empty($result)) {
-        $resObj = $result->fetch_object();
-        echo '<pre>'; print_r([    $resObj    ]); echo die;
-        
+    while ($obj = $result->fetch_object()) {
+        $ar[] = $obj;
     }
+      
+      echo '<pre>'; print_r([    $ar    ]); echo die;
+      
     if(!runQuery($sql)){
         throw new Exception('Cannot create List: ' . $sql);
     }
