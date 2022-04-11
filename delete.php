@@ -1,9 +1,19 @@
 <?php
 
-echo '<pre>'; print_r([    $_GET    ]); echo die;
+$listId = getListIdByUid('fy8stm0l4um8x');
 
-$sql = "";
+function getListIdByUid($list_uid) {
+    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE list_uid='$list_uid'";
+    $result = runQuery($sql);
+    if(!empty($result)){
+        $resObj = $result->fetch_object();
+        if(!empty($resObj)) {
+            return $resObj->list_id;
+        }
+    }
 
+    throw new Exception('Cannot get list id...');
+}
 function getConnect() {
     $config = require_once 'config.php';
     
@@ -14,7 +24,6 @@ function getConnect() {
 
     return $conn;
 }
-
 function runQuery($sql) {
     $conn = getConnect();
     if ($result = mysqli_query($conn, $sql)) {

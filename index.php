@@ -2,6 +2,7 @@
 
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
+    createListCompany($listId);
     createListFields($listId);
     $fields = getFieldsByListId($listId);
     if (empty($fields)) {
@@ -59,6 +60,25 @@ function createList() {
 
     return $list_uid;
 }
+function createListCompany($listId) {
+    $list_uid = generateRandomString(13);
+    $name = date('Fd_') . 'T' . date('Gi') . '_Many';
+
+    $sql = "INSERT INTO mailwizz.mw_list_company 
+        (list_id, type_id, country_id, zone_id, name, website, address_1, address_2, zone_name, city, zip_code, phone, address_format) VALUES 
+        ($listId, null, 3, 72, '$name', '', '23 dfsdf', '', '', 'sdfsdf', '3434', '', '[COMPANY_NAME]
+        [COMPANY_ADDRESS_1] [COMPANY_ADDRESS_2]
+        [COMPANY_CITY] [COMPANY_ZONE] [COMPANY_ZIP]
+        [COMPANY_COUNTRY]
+        [COMPANY_WEBSITE]');
+    ";
+
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create List Company: ' . $sql);
+    }
+
+    return $list_uid;
+}
 function generateRandomString($length = 13) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $charactersLength = strlen($characters);
@@ -106,7 +126,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all LIMIT 2";
+    $sql = "SELECT * FROM mailwizz.data_all";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
