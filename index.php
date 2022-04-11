@@ -29,7 +29,7 @@ function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
     $config = require_once 'config.php';
 
-    echo '<pre>'; print_r([    $config    ]); echo die;
+    echo '<pre>'; print_r([    $config['servername'], $config['username'], $config['password'], $config['database']    ]); echo die;
     
     $conn = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['database']);
     if (!$conn) {
