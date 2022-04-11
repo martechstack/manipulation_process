@@ -30,6 +30,12 @@ function deleteListField($listId){
         throw new Exception('Cannot delete mw_list_field, sql: ' . $sql);
     }
 }
+function deleteList($listId){
+    $sql = "DELETE FROM mailwizz.mw_list WHERE list_id=$listId";
+    if(!runQuery($sql)){
+        throw new Exception('Cannot delete mw_list, sql: ' . $sql);
+    }
+}
 function getListIdByUid($list_uid) {
     $sql = "SELECT list_id FROM mailwizz.mw_list WHERE list_uid='$list_uid'";
     $result = runQuery($sql);
