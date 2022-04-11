@@ -4,6 +4,7 @@ $listId = getListIdByUid('2wlzyofrm34va');
 deleteListCompany($listId);
 deleteListDefault($listId);
 deleteListNotification($listId);
+deleteListField($listId);
 
 function deleteListCompany($listId){
     $sql = "DELETE FROM mailwizz.mw_list_company WHERE list_id=$listId";
@@ -21,6 +22,12 @@ function deleteListNotification($listId){
     $sql = "DELETE FROM mailwizz.mw_list_customer_notification WHERE list_id=$listId";
     if(!runQuery($sql)){
         throw new Exception('Cannot delete mw_list_customer_notification, sql: ' . $sql);
+    }
+}
+function deleteListField($listId){
+    $sql = "DELETE FROM mailwizz.mw_list_field WHERE list_id=$listId";
+    if(!runQuery($sql)){
+        throw new Exception('Cannot delete mw_list_field, sql: ' . $sql);
     }
 }
 function getListIdByUid($list_uid) {
