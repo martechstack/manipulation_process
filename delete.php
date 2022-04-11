@@ -1,7 +1,28 @@
 <?php
 
-$listId = getListIdByUid('fy8stm0l4um8x');
+$listId = getListIdByUid('2wlzyofrm34va');
+deleteListCompany($listId);
+deleteListDefault($listId);
+deleteListNotification($listId);
 
+function deleteListCompany($listId){
+    $sql = "DELETE FROM mailwizz.mw_list_company WHERE list_id=$listId";
+    if(!runQuery($sql)){
+        throw new Exception('Cannot delete mw_list_company, sql: ' . $sql);
+    }
+}
+function deleteListDefault($listId){
+    $sql = "DELETE FROM mailwizz.mw_list_default WHERE list_id=$listId";
+    if(!runQuery($sql)){
+        throw new Exception('Cannot delete mw_list_default, sql: ' . $sql);
+    }
+}
+function deleteListNotification($listId){
+    $sql = "DELETE FROM mailwizz.mw_list_customer_notification WHERE list_id=$listId";
+    if(!runQuery($sql)){
+        throw new Exception('Cannot delete mw_list_customer_notification, sql: ' . $sql);
+    }
+}
 function getListIdByUid($list_uid) {
     $sql = "SELECT list_id FROM mailwizz.mw_list WHERE list_uid='$list_uid'";
     $result = runQuery($sql);
