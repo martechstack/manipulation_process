@@ -1,8 +1,38 @@
 <?php
 
+try {
+    $dbh = new PDO('localhost:mailwizz', 'root', 'Cvk9bpk1vV',
+        array(PDO::ATTR_PERSISTENT => true));
+    echo "Подключились\n";
+} catch (Exception $e) {
+    die("Не удалось подключиться: " . $e->getMessage());
+}
+die;
+try {
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $dbh->beginTransaction();
+    $dbh->exec("insert into staff (id, first, last) values (23, 'Joe', 'Bloggs')");
+    $dbh->exec("insert into salarychange (id, amount, changedate)
+      values (23, 50000, NOW())");
+    $dbh->commit();
+
+} catch (Exception $e) {
+    $dbh->rollBack();
+    echo "Ошибка: " . $e->getMessage();
+}
+
+die;
+
+
+
+
+
 $listUid = createList();
-$listId = getListIdByUid($listUid);
-createSubscribers($listId, getDataAll());
+if ($listId = getListIdByUid($listUid)) {
+    $createdSubscribers = createSubscribers($listId, getDataAll());
+    createListFields($listId);
+}
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
@@ -52,13 +82,16 @@ function generateRandomString($length = 13) {
     return $randomString;
 }
 function createSubscribers($listId, $data){
-    foreach ($data as $key => $datum) {
-        createSubscriber($listId,$datum);
+    $created = 0;
+    foreach ($data as $datum) {
+        if ( createSubscriber($listId,$datum)) {
+            $created++;
+        }
     }
     
-    echo PHP_EOL . "Done successfully: $key +1 subscribers";
+    return $created;
 }
-function createSubscriber($listId,$datum) {
+function createSubscriber($listId, $datum) {
     $subscriber_uid = generateRandomString();
     $email = $datum->Email;
     $time = timeNow();
@@ -67,7 +100,9 @@ function createSubscriber($listId,$datum) {
     (subscriber_id, subscriber_uid, list_id, email, ip_address, source, status, date_added, last_updated) VALUES
     (NULL, '$subscriber_uid', $listId, '$email', '', 'import', 'confirmed', '$time', '$time');";
 
-    runQuery($sql);
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create subscriber, sql: ' . $sql);
+    }
 
     return $subscriber_uid;
 }
@@ -91,5 +126,17 @@ function getDataAll() {
     }
 
     return $ar;
+}
+function createListFields($listId){
+    $time = timeNow();
+    $sql = "
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Email', 'EMAIL', null, null, null, 'yes', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'From', 'FROM', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Code', 'CODE', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Carrier', 'CARRIER', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Bucket', 'BUCKET', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'First name', 'FNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 1, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Last name', 'LNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 2, '$time', '$time');
+    ";
 }
 ?>
