@@ -177,13 +177,12 @@ function getFieldId($fields, $label){
 }
 function findSubscriberInData($dataAll, $subscriber){
     foreach ($dataAll as $datum) {
-        echo '<pre>'; print_r([    $datum, $subscriber, $datum->Email, $subscriber->Email    ]); echo die;
-        if ($datum->Email == $subscriber->Email) {
+        if ($datum->Email == $subscriber->email) {
             return $datum;
         }
     }
 
-    throw new Exception('Cannot find subscriber in datum, subscriber Email: ' . $subscriber->Email);
+    throw new Exception('Cannot find subscriber in datum, subscriber Email: ' . $subscriber->email);
 }
 function getSubscribersByListId($listId) {
     $sql = "SELECT * FROM mailwizz.mw_list_subscriber WHERE list_id='$listId'";
