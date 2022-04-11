@@ -1,11 +1,7 @@
 <?php
 
 $uids = [
-    'fsj7tlpct5c1c',
-    'gy704d8tv342e',
-    'xqxgje4u05arp',
-    's0pcjmjcjfx8z',
-    '2wlzyofrm34va',
+    '8midjmddzlf50',
 ];
 
 foreach ($uids as $uid) {
