@@ -3,6 +3,7 @@
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
+    createListDefault($listId);
     createListFields($listId);
     $fields = getFieldsByListId($listId);
     if (empty($fields)) {
@@ -79,6 +80,13 @@ function createListCompany($listId) {
 
     return $list_uid;
 }
+function createListDefault($listId) {
+    $sql = "INSERT INTO mailwizz.mw_list_default (list_id, from_name, from_email, reply_to, subject) VALUES ($listId, 'Admin User', 'info@digitaldataandsolutions.com', 'info@digitaldataandsolutions.com', '');";
+
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create List Default: ' . $sql);
+    }
+}
 function generateRandomString($length = 13) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
     $charactersLength = strlen($characters);
@@ -126,7 +134,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 0";
+    $sql = "SELECT * FROM mailwizz.data_all LIMIT 225 OFFSET 226";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
