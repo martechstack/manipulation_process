@@ -43,8 +43,8 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getConnect() {
-    $config = require_once 'config.php';
-    
+    $config = require 'config.php';
+
     $conn = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['database']);
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
