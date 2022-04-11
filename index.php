@@ -27,7 +27,7 @@ function getConnect() {
 function runQuery($sql) {
     $conn = getConnect();
     if ($result = mysqli_query($conn, $sql)) {
-    echo '<pre>'; print_r([    $result    ]); echo die;
+    echo '<pre>'; print_r([    $result, 'r4e'    ]); echo die;
     
     } else {
         echo "\n<br/>Error: " . $sql . "<br>" . mysqli_error($conn);
