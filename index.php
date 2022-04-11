@@ -6,6 +6,7 @@ if ($listId = getListIdByUid($listUid)) {
     $dataAll = getDataAll();
     if (!empty($dataAll)) {
         $createdSubscribersCount = createSubscribers($listId, $dataAll);
+        $subscribers = getSubscribersByListIdsubscriber_uid($listId);
         createListFieldValue($dataAll);
     }
 }
@@ -27,8 +28,6 @@ function getConnect() {
 function runQuery($sql) {
     $conn = getConnect();
     if ($result = mysqli_query($conn, $sql)) {
-    echo '<pre>'; print_r([    $result, 'r4e'    ]); echo die;
-    
     } else {
         echo "\n<br/>Error: " . $sql . "<br>" . mysqli_error($conn);
     }
@@ -43,9 +42,12 @@ function createList() {
     $sql = "INSERT INTO mailwizz.mw_list
             (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status, date_added, last_updated) VALUES
             (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active', '$time', '$time');";
-
-            echo '<pre>'; print_r([    runQuery($sql)    ]); echo die;
-            
+    $result = runQuery($sql);
+    if(!empty($result)) {
+        $resObj = $result->fetch_object();
+        echo '<pre>'; print_r([    $resObj    ]); echo die;
+        
+    }
     if(!runQuery($sql)){
         throw new Exception('Cannot create List: ' . $sql);
     }
@@ -136,9 +138,23 @@ function createListFieldValue($dataAll){
         
 
     ";
-    
+
+
     if(!runQuery($sql)){
         throw new Exception('Cannot create list field, sql: ' . $sql);
     }
+}
+
+function getSubscribersByListId($listId){
+    $sql = "SELECT * FROM mailwizz.mw_list_subscriber WHERE list_id='$listId'";
+    $result = runQuery($sql);
+    if(!empty($result)){
+        $resObj = $result->fetch_object();
+        if(!empty($resObj)) {
+            return $resObj->list_id;
+        }
+    }
+
+    throw new Exception('Cannot get list id...');
 }
 ?>
