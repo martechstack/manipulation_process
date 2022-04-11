@@ -20,6 +20,8 @@ if ($listId = getListIdByUid($listUid)) {
     }
 
     createListFieldValue($dataAll, $subscribers, $fields);
+
+    echo 'DONE!';
 }
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
@@ -136,26 +138,51 @@ function createListFields($listId){
 }
 function createListFieldValue($dataAll, $subscribers, $fields){
     $time = timeNow();
+    $fildIdFirstName = getFieldId($fields, 'First name');
+    $fildIdLastName = getFieldId($fields, 'Last name');
+    $fildIdEmail = getFieldId($fields, 'Email');
+    $fildIdFrom = getFieldId($fields, 'From');
+    $fildIdCarrier = getFieldId($fields, 'Carrier');
+    $fildIdCode = getFieldId($fields, 'Code');
 
-    echo '<pre>'; print_r([    $dataAll,$subscribers,$fields     ]); echo die;
-    
     foreach($subscribers as $subscriber) {
-        foreach($fields as $field) {
-            $sql = "
-                INSERT INTO mailwizz.mw_list_field_value 
-                (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES 
-                (NULL, $field->field_id, $subscriber->subscriber_id, 'https://bit.ly/PlNJ5d3', '$time', '$time');
-                INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 555, 869357, '8582422271@vtext.com', '$time', '$time');
-                INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 556, 869357, 'shantonio1204@gmail.com', '$time', '$time');
-                INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 560, 869357, 'Lewis', '$time', '$time');
-                INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 561, 869357, 'Shantonio', '$time', '$time');
+       $datum = findSubscriberInData($dataAll, $subscriber);
+
+//        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, $field->field_id, $subscriber->subscriber_id, 'https://bit.ly/PlNJ5d3', '$time', '$time');
+        $sql = "
+                INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES 
+                (NULL, $fildIdFirstName, $subscriber->subscriber_id, '$datum->FirstName', '$time', '$time'),
+                (NULL, $fildIdLastName, $subscriber->subscriber_id, '$datum->LastName', '$time', '$time'),
+                (NULL, $fildIdFrom, $subscriber->subscriber_id, '$datum->From', '$time', '$time'),
+                (NULL, $fildIdEmail, $subscriber->subscriber_id, '$datum->Email', '$time', '$time'),
+                (NULL, $fildIdCode, $subscriber->subscriber_id, '$datum->Code', '$time', '$time'),
+                (NULL, $fildIdCarrier, $subscriber->subscriber_id, '$datum->Carrier', '$time', '$time');
             ";
 
-            if(!runQuery($sql)){
-                throw new Exception('Cannot create list field, sql: ' . $sql);
-            }
+        if(!runQuery($sql)){
+            throw new Exception('Cannot create field values, sql: ' . $sql);
         }
     }
+
+    return true;
+}
+function getFieldId($fields, $label){
+    foreach ($fields as $field) {
+        if ($field->label == $label) {
+            return $field->field_id;
+        }
+    }
+
+    throw new Exception('Cannot find field label: ' . $label);
+}
+function findSubscriberInData($dataAll, $subscriber){
+    foreach ($dataAll as $datum) {
+        if ($datum->Email == $subscriber->Email) {
+            return $datum;
+        }
+    }
+
+    throw new Exception('Cannot find subscriber in datum, subscriber Email: ' . $subscriber->Email);
 }
 function getSubscribersByListId($listId) {
     $sql = "SELECT * FROM mailwizz.mw_list_subscriber WHERE list_id='$listId'";
