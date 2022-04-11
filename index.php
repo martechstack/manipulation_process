@@ -1,37 +1,13 @@
 <?php
 
-try {
-    $dbh = new PDO('localhost:mailwizz', 'root', 'Cvk9bpk1vV',
-        array(PDO::ATTR_PERSISTENT => true));
-    echo "Подключились\n";
-} catch (Exception $e) {
-    die("Не удалось подключиться: " . $e->getMessage());
-}
-die;
-try {
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $dbh->beginTransaction();
-    $dbh->exec("insert into staff (id, first, last) values (23, 'Joe', 'Bloggs')");
-    $dbh->exec("insert into salarychange (id, amount, changedate)
-      values (23, 50000, NOW())");
-    $dbh->commit();
-
-} catch (Exception $e) {
-    $dbh->rollBack();
-    echo "Ошибка: " . $e->getMessage();
-}
-
-die;
-
-
-
-
-
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
-    $createdSubscribers = createSubscribers($listId, getDataAll());
     createListFields($listId);
+    $dataAll = getDataAll();
+    if (!empty($dataAll)) {
+        $createdSubscribersCount = createSubscribers($listId, $dataAll);
+        createListFieldValue($dataAll);
+    }
 }
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
@@ -66,6 +42,8 @@ function createList() {
             (list_id, list_uid, customer_id, name, display_name, description, visibility, opt_in, opt_out, welcome_email, removable, subscriber_require_approval, subscriber_404_redirect, subscriber_exists_redirect, meta_data, status, date_added, last_updated) VALUES
             (NULL, '$list_uid', 1, '$name', '$name', '$name', 'public', 'single', 'single', 'no', 'yes', 'no', '', '', 0x613A323A7B733A33383A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F737562736372696265223B693A303B733A34303A2269735F73656C6563745F616C6C5F61745F616374696F6E5F7768656E5F756E737562736372696265223B693A303B7D, 'active', '$time', '$time');";
 
+            echo '<pre>'; print_r([    runQuery($sql)    ]); echo die;
+            
     if(!runQuery($sql)){
         throw new Exception('Cannot create List: ' . $sql);
     }
@@ -130,13 +108,35 @@ function getDataAll() {
 function createListFields($listId){
     $time = timeNow();
     $sql = "
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Email', 'EMAIL', null, null, null, 'yes', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'From', 'FROM', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Code', 'CODE', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Carrier', 'CARRIER', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Bucket', 'BUCKET', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'First name', 'FNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 1, '$time', '$time');
-        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES (NULL, 2, $listId, 'Last name', 'LNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 2, '$time', '$time');
+        INSERT INTO mailwizz.mw_list_field (field_id, type_id, list_id, label, tag, default_value, help_text, description, required, visibility, meta_data, sort_order, date_added, last_updated) VALUES 
+        (NULL, 2, $listId, 'Email', 'EMAIL', null, null, null, 'yes', 'visible', 0x613A303A7B7D, 0, '$time', '$time'),
+        (NULL, 2, $listId, 'From', 'FROM', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time'),
+        (NULL, 2, $listId, 'Code', 'CODE', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time'),
+        (NULL, 2, $listId, 'Carrier', 'CARRIER', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time'),
+        (NULL, 2, $listId, 'Bucket', 'BUCKET', null, null, null, 'no', 'visible', 0x613A303A7B7D, 0, '$time', '$time'),
+        (NULL, 2, $listId, 'First name', 'FNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 1, '$time', '$time'),
+        (NULL, 2, $listId, 'Last name', 'LNAME', null, null, null, 'no', 'visible', 0x613A303A7B7D, 2, '$time', '$time');
     ";
+
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create list field, sql: ' . $sql);
+    }
+    
+    return true;
+}
+function createListFieldValue($dataAll){
+    $sql = "
+        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 559, 869357, 'https://bit.ly/PlNJ5d3', '2022-04-07 20:37:55', '2022-04-07 20:37:55');
+        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 555, 869357, '8582422271@vtext.com', '2022-04-07 20:37:55', '2022-04-07 20:37:55');
+        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 556, 869357, 'shantonio1204@gmail.com', '2022-04-07 20:37:55', '2022-04-07 20:37:55');
+        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 560, 869357, 'Lewis', '2022-04-07 20:37:55', '2022-04-07 20:37:55');
+        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, 561, 869357, 'Shantonio', '2022-04-07 20:37:55', '2022-04-07 20:37:55');
+        
+
+    ";
+    
+    if(!runQuery($sql)){
+        throw new Exception('Cannot create list field, sql: ' . $sql);
+    }
 }
 ?>
