@@ -1,10 +1,22 @@
 <?php
 
-$listId = getListIdByUid('2wlzyofrm34va');
-deleteListCompany($listId);
-deleteListDefault($listId);
-deleteListNotification($listId);
-deleteListField($listId);
+$uids = [
+    'fsj7tlpct5c1c',
+    'gy704d8tv342e',
+    'xqxgje4u05arp',
+    's0pcjmjcjfx8z',
+    '2wlzyofrm34va',
+];
+
+foreach ($uids as $uid) {
+    $listId = getListIdByUid($uid);
+    deleteListCompany($listId);
+    deleteListDefault($listId);
+    deleteListNotification($listId);
+    deleteListField($listId);
+
+    echo " Deleted: $uid ";
+}
 
 function deleteListCompany($listId){
     $sql = "DELETE FROM mailwizz.mw_list_company WHERE list_id=$listId";
