@@ -1,8 +1,5 @@
 <?php
 
-$buckets = require 'buckets.php';
-echo $buckets[array_rand($buckets)];die;
-
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
@@ -195,7 +192,7 @@ function createListFieldValue($dataAll, $subscribers, $fields){
 
     foreach($subscribers as $subscriber) {
        $datum = findSubscriberInData($dataAll, $subscriber);
-       $bucket = array_rand(require 'buckets.php');
+       $bucket = getRandomBucket();
 
 //        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, $field->field_id, $subscriber->subscriber_id, 'https://bit.ly/PlNJ5d3', '$time', '$time');
         $sql = "
@@ -206,7 +203,7 @@ function createListFieldValue($dataAll, $subscribers, $fields){
                 (NULL, $fildIdEmail, $subscriber->subscriber_id, '$datum->Email', '$time', '$time'),
                 (NULL, $fildIdCode, $subscriber->subscriber_id, '$datum->Code', '$time', '$time'),
                 (NULL, $fildIdCarrier, $subscriber->subscriber_id, '$datum->Carrier', '$time', '$time'),
-                (NULL, $fildIdBucket, $subscriber->subscriber_id, '$datum->Bucket', '$time', '$time');
+                (NULL, $fildIdBucket, $subscriber->subscriber_id, '$bucket', '$time', '$time');
             ";
 
         if(!runQuery($sql)){
@@ -215,6 +212,16 @@ function createListFieldValue($dataAll, $subscribers, $fields){
     }
 
     return true;
+}
+function getRandomBucket() {
+    $buckets = require 'buckets.php';
+    if(empty($buckets[array_rand($buckets)])) {
+        throw new Exception('Cannot get bucket');
+    }
+
+    $bucket = $buckets[array_rand($buckets)];
+
+    return $bucket;
 }
 function getFieldId($fields, $label){
     foreach ($fields as $field) {
