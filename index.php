@@ -1,31 +1,31 @@
 <?php
 
-//$listUid = createList();
-//if ($listId = getListIdByUid($listUid)) {
-//    createListCompany($listId);
-//    createListDefault($listId);
-//    createListNotification($listId);
-//    createListFields($listId);
-//    $fields = getFieldsByListId($listId);
-//    if (empty($fields)) {
-//        throw new Exception("Cannot find any fields with listId = $listId...");
-//    }
-//
+$listUid = createList();
+if ($listId = getListIdByUid($listUid)) {
+    createListCompany($listId);
+    createListDefault($listId);
+    createListNotification($listId);
+    createListFields($listId);
+    $fields = getFieldsByListId($listId);
+    if (empty($fields)) {
+        throw new Exception("Cannot find any fields with listId = $listId...");
+    }
+
     $dataAll = getDataAll();
     if (empty($dataAll)) {
         throw new Exception('No data in table data_all...');
     }
 
-    $createdSubscribersCount = createSubscribers(142, $dataAll);
-//    $subscribers = getSubscribersByListId($listId);
-//    if (empty($subscribers)) {
-//        throw new Exception("Cannot find any subscriber with listId = $listId...");
-//    }
-//
-//    createListFieldValue($dataAll, $subscribers, $fields);
-//
-//    echo 'DONE!';
-//}
+    $createdSubscribersCount = createSubscribers($listId, $dataAll);
+    $subscribers = getSubscribersByListId($listId);
+    if (empty($subscribers)) {
+        throw new Exception("Cannot find any subscriber with listId = $listId...");
+    }
+
+    createListFieldValue($dataAll, $subscribers, $fields);
+
+    echo 'DONE!';
+}
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
@@ -107,7 +107,7 @@ function generateRandomString($length = 13) {
 function createSubscribers($listId, $data){
     $created = 0;
     foreach ($data as $datum) {
-        if ( 1) {
+        if ( createSubscriber($listId, $datum)) {
             $created++;
             markUsed($datum);
         }
@@ -132,7 +132,7 @@ function createSubscriber($listId, $datum) {
 }
 function markUsed($datum) {
     $sql = "UPDATE mailwizz.data_all SET Used=1 WHERE id=$datum->id";
-echo $datum->id;
+
     if(!runQuery($sql)){
         throw new Exception('Cannot set Used = 1, sql: ' . $sql);
     }
