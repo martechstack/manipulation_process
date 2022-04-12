@@ -239,8 +239,8 @@ function createListFieldValue($dataAll, $subscribers, $fields){
        $datum = findSubscriberInData($dataAll, $subscriber);
        $bucket = getRandomBucket();
 
-       $firstName = mysql_real_escape_string($datum->FirstName);
-       $lastName = mysql_real_escape_string($datum->LastName);
+       $firstName = addslashes($datum->FirstName);
+       $lastName = addslashes($datum->LastName);
         $sql = "
                 INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES 
                 (NULL, $fildIdFirstName, $subscriber->subscriber_id, '$firstName', '$time', '$time'),
