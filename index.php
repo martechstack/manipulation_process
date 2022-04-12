@@ -133,7 +133,7 @@ function createListNotification($listId) {
     $sql = "INSERT INTO mailwizz.mw_list_customer_notification (list_id, daily, subscribe, unsubscribe, daily_to, subscribe_to, unsubscribe_to) VALUES ($listId, 'no', 'no', 'no', null, '', '');";
 
     if(!runQuery($sql)){
-        throw new Exception('Cannot create List 1Notification: ' . $sql);
+        throw new Exception('Cannot create List Notification: ' . $sql);
     }
 }
 function generateRandomString($length = 13) {
@@ -239,11 +239,12 @@ function createListFieldValue($dataAll, $subscribers, $fields){
        $datum = findSubscriberInData($dataAll, $subscriber);
        $bucket = getRandomBucket();
 
-//        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, $field->field_id, $subscriber->subscriber_id, 'https://bit.ly/PlNJ5d3', '$time', '$time');
+       $firstName = mysql_real_escape_string($datum->FirstName);
+       $lastName = mysql_real_escape_string($datum->LastName);
         $sql = "
                 INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES 
-                (NULL, $fildIdFirstName, $subscriber->subscriber_id, '$datum->FirstName', '$time', '$time'),
-                (NULL, $fildIdLastName, $subscriber->subscriber_id, '$datum->LastName', '$time', '$time'),
+                (NULL, $fildIdFirstName, $subscriber->subscriber_id, '$firstName', '$time', '$time'),
+                (NULL, $fildIdLastName, $subscriber->subscriber_id, '$lastName', '$time', '$time'),
                 (NULL, $fildIdFrom, $subscriber->subscriber_id, '$datum->From', '$time', '$time'),
                 (NULL, $fildIdEmail, $subscriber->subscriber_id, '$datum->Email', '$time', '$time'),
                 (NULL, $fildIdCode, $subscriber->subscriber_id, '$datum->Code', '$time', '$time'),
