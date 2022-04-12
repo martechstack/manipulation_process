@@ -155,7 +155,7 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * FROM mailwizz.data_all WHERE Carrier NOT IN ('att') LIMIT 1 OFFSET 0";
+    $sql = "SELECT * FROM mailwizz.data_all WHERE Carrier NOT IN ('att')"; // LIMIT 1 OFFSET 0
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
