@@ -1,77 +1,40 @@
 <?php
 
-/*
- * APRIL:
-100 TM  - APR12_APRIL_TM_100 tmobile     used
-100 VZ - APR12_APRIL_VZ_100 verizon      used
-100 ATT - APR12_APRIL_ATT_100            not need
-
-1000 TM  - APR12_APRIL_TM_1000           used
-1000 VZ - APR12_APRIL_VZ_1000
-1000 ATT - APR12_APRIL_ATT_1000
-
-AURORA:
-
-100 TM  - APR12_AURORA_TM_100           used
-100 VZ - APR12_AURORA_VZ_100            used
-100 ATT - APR12_AURORA_ATT_100         not need
-
-1000 TM  - APR12_AURORA_TM_1000
-1000 VZ - APR12_AURORA_VZ_1000
-1000 ATT - APR12_AURORA_ATT_1000        not need
-
-BLACKBIRD:
-
-100 TM  - APR12_BLACKBIRD_TM_100            used
-100 VZ - APR12_BLACKBIRD_VZ_100             used
-100 ATT - APR12_BLACKBIRD_ATT_100         not need
-
-1000 TM  - APR12_BLACKBIRD_TM_1000
-1000 VZ - APR12_BLACKBIRD_VZ_1000
-1000 ATT - APR12_BLACKBIRD_ATT_1000        not need
-
-ECLIPSE:
-
-100 TM  - APR12_ECLIPSE_TM_100
-100 VZ - APR12_ECLIPSE_VZ_100               used
-100 ATT - APR12_ECLIPSE_ATT_100            not need
-
-1000 TM  - APR12_ECLIPSE_TM_1000
-1000 VZ - APR12_ECLIPSE_VZ_1000
-1000 ATT - APR12_ECLIPSE_ATT_1000          not need
- */
-
-$listName = 'APR12_ECLIPSE_TM_100';
+for($i=1; $i<=3;$i++){
+    $listName = 'TM_100_List_' . $i;
 //$carrier = 'verizon';
-$carrier = 'tmobile';
-$limit = '100';
+    $carrier = 'tmobile';
+    $limit = '100';
 
-$listUid = createList($listName);
-if ($listId = getListIdByUid($listUid)) {
-    createListCompany($listId);
-    createListDefault($listId);
-    createListNotification($listId);
-    createListFields($listId);
-    $fields = getFieldsByListId($listId);
-    if (empty($fields)) {
-        throw new Exception("Cannot find any fields with listId = $listId...");
+    $listUid = createList($listName);
+    if ($listId = getListIdByUid($listUid)) {
+        createListCompany($listId);
+        createListDefault($listId);
+        createListNotification($listId);
+        createListFields($listId);
+        $fields = getFieldsByListId($listId);
+        if (empty($fields)) {
+            throw new Exception("Cannot find any fields with listId = $listId...");
+        }
+
+        $dataAll = getDataAll($carrier, $limit);
+        if (empty($dataAll)) {
+            throw new Exception('No data in table data_all...');
+        }
+
+        $createdSubscribersCount = createSubscribers($listId, $dataAll);
+        $subscribers = getSubscribersByListId($listId);
+        if (empty($subscribers)) {
+            throw new Exception("Cannot find any subscriber with listId = $listId...");
+        }
+
+        createListFieldValue($dataAll, $subscribers, $fields);
+
+        echo PHP_EOL . 'DONE!' . PHP_EOL;
     }
-
-    $dataAll = getDataAll($carrier, $limit);
-    if (empty($dataAll)) {
-        throw new Exception('No data in table data_all...');
-    }
-
-    $createdSubscribersCount = createSubscribers($listId, $dataAll);
-    $subscribers = getSubscribersByListId($listId);
-    if (empty($subscribers)) {
-        throw new Exception("Cannot find any subscriber with listId = $listId...");
-    }
-
-    createListFieldValue($dataAll, $subscribers, $fields);
-
-    echo PHP_EOL . 'DONE!' . PHP_EOL;
 }
+
+
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
