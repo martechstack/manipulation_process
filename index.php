@@ -1,8 +1,47 @@
 <?php
 
-echo '<pre>'; print_r([    getDataAll()    ]); echo die;
+/*
+ * APRIL:
+100 TM  - APR12_APRIL_TM_100
+100 VZ - APR12_APRIL_VZ_100
+100 ATT - APR12_APRIL_ATT_100
 
-$listUid = createList();
+1000 TM  - APR12_APRIL_TM_1000
+1000 VZ - APR12_APRIL_VZ_1000
+1000 ATT - APR12_APRIL_ATT_1000
+
+AURORA:
+
+100 TM  - APR12_AURORA_TM_100
+100 VZ - APR12_AURORA_VZ_100
+100 ATT - APR12_AURORA_ATT_100
+
+1000 TM  - APR12_AURORA_TM_1000
+1000 VZ - APR12_AURORA_VZ_1000
+1000 ATT - APR12_AURORA_ATT_1000
+
+BLACKBIRD:
+
+100 TM  - APR12_BLACKBIRD_TM_100
+100 VZ - APR12_BLACKBIRD_VZ_100
+100 ATT - APR12_BLACKBIRD_ATT_100
+
+1000 TM  - APR12_BLACKBIRD_TM_1000
+1000 VZ - APR12_BLACKBIRD_VZ_1000
+1000 ATT - APR12_BLACKBIRD_ATT_1000
+
+ECLIPSE:
+
+100 TM  - APR12_ECLIPSE_TM_100
+100 VZ - APR12_ECLIPSE_VZ_100
+100 ATT - APR12_ECLIPSE_ATT_100
+
+1000 TM  - APR12_ECLIPSE_TM_1000
+1000 VZ - APR12_ECLIPSE_VZ_1000
+1000 ATT - APR12_ECLIPSE_ATT_1000
+ */
+
+$listUid = createList('APR12_APRIL_TM_100');
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
     createListDefault($listId);
@@ -49,10 +88,9 @@ function runQuery($sql) {
 
     return $result;
 }
-function createList() {
+function createList($name) {
     $list_uid = generateRandomString(13);
 //    $name = date('Fd_') . 'T' . date('Gi') . '_Many';
-    $name = '100 TM  - APR12_APRIL_TM_100';
     $time = timeNow();
 
     $sql = "INSERT INTO mailwizz.mw_list
@@ -155,11 +193,12 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll() {
-    $sql = "SELECT * 
-            FROM mailwizz.data_all 
-            WHERE Carrier NOT IN ('att')
-            AND NOT IN (1)
-            LIMIT 10;"; // LIMIT 1 OFFSET 0 AND Used != 1
+    $sql = "SELECT *
+            FROM mailwizz.data_all
+            WHERE Carrier IN ('tmobile')
+            AND Used IS NULL;
+            LIMIT 100
+            "; // LIMIT 1 OFFSET 0 AND Used != 1
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
