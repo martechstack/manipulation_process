@@ -1,6 +1,6 @@
 <?php
 
-echo '<pre>'; print_r([    count(getDataAll()), getDataAll()    ]); echo die;
+echo '<pre>'; print_r([    getDataAll()    ]); echo die;
 
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
