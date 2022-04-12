@@ -53,14 +53,15 @@ $uids = [
 ];
 
 foreach ($uids as $uid) {
-    $listId = getListIdByUid($uid);
-    deleteListCompany($listId);
-    deleteListDefault($listId);
-    deleteListNotification($listId);
-    deleteListField($listId);
-    deleteList($listId);
+    if ($listId = getListIdByUid($uid)) {
+        deleteListCompany($listId);
+        deleteListDefault($listId);
+        deleteListNotification($listId);
+        deleteListField($listId);
+        deleteList($listId);
 
-    echo " Deleted: $uid ";
+        echo " Deleted: $uid ";
+    }
 }
 
 function deleteListCompany($listId){
@@ -102,8 +103,9 @@ function getListIdByUid($list_uid) {
             return $resObj->list_id;
         }
     }
+    echo PHP_EOL . "Cannot get list id, UID: $list_uid".PHP_EOL;
 
-    throw new Exception('Cannot get list id...');
+    return false;
 }
 function getConnect() {
     $config = require 'config.php';
