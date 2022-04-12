@@ -2,9 +2,9 @@
 
 /*
  * APRIL:
-100 TM  - APR12_APRIL_TM_100
-100 VZ - APR12_APRIL_VZ_100
-100 ATT - APR12_APRIL_ATT_100
+100 TM  - APR12_APRIL_TM_100 tmobile     used
+100 VZ - APR12_APRIL_VZ_100 verizon
+100 ATT - APR12_APRIL_ATT_100 not need
 
 1000 TM  - APR12_APRIL_TM_1000
 1000 VZ - APR12_APRIL_VZ_1000
@@ -41,7 +41,7 @@ ECLIPSE:
 1000 ATT - APR12_ECLIPSE_ATT_1000
  */
 
-$listUid = createList('APR12_APRIL_TM_100');
+$listUid = createList('APR12_APRIL_VZ_100');
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
     createListDefault($listId);
@@ -195,7 +195,7 @@ function getListIdByUid($list_uid) {
 function getDataAll() {
     $sql = "SELECT *
             FROM mailwizz.data_all
-            WHERE Carrier IN ('tmobile')
+            WHERE Carrier IN ('verizon')
             AND Used IS NULL
             LIMIT 100
             "; // LIMIT 1 OFFSET 0 AND Used != 1
