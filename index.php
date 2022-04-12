@@ -1,15 +1,7 @@
 <?php
 
 /*
-TM_100_List_4
-TM_100_List_5
-TM_100_List_6
-TM_100_List_7
-TM_100_List_8
-TM_100_List_9
-TM_100_List_10
 
-VZ_100_List_1
 VZ_100_List_2
 VZ_100_List_3
 VZ_100_List_4
@@ -31,10 +23,10 @@ ATT_100_List_8
 ATT_100_List_9
 ATT_100_List_10*/
 
-for($i=4; $i<=10;$i++){
-    $listName = 'TM_100_List_' . $i;
-//$carrier = 'verizon';
-    $carrier = 'tmobile';
+for($i=2; $i<=10;$i++){
+    $listName = 'VZ_100_List_' . $i;
+$carrier = 'verizon';
+//    $carrier = 'tmobile';
     $limit = '100';
 
     $listUid = createList($listName);
