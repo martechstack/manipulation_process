@@ -49,7 +49,8 @@ function runQuery($sql) {
 }
 function createList() {
     $list_uid = generateRandomString(13);
-    $name = date('Fd_') . 'T' . date('Gi') . '_Many';
+//    $name = date('Fd_') . 'T' . date('Gi') . '_Many';
+    $name = '100 TM  - APR12_APRIL_TM_100';
     $time = timeNow();
 
     $sql = "INSERT INTO mailwizz.mw_list
