@@ -1,5 +1,5 @@
 <?php
-
+echo array_rand(require 'buckets.php');die;
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
@@ -188,9 +188,11 @@ function createListFieldValue($dataAll, $subscribers, $fields){
     $fildIdFrom = getFieldId($fields, 'From');
     $fildIdCarrier = getFieldId($fields, 'Carrier');
     $fildIdCode = getFieldId($fields, 'Code');
+    $fildIdBucket = getFieldId($fields, 'Bucket');
 
     foreach($subscribers as $subscriber) {
        $datum = findSubscriberInData($dataAll, $subscriber);
+       $bucket = array_rand(require 'buckets.php');
 
 //        INSERT INTO mailwizz.mw_list_field_value (value_id, field_id, subscriber_id, value, date_added, last_updated) VALUES (NULL, $field->field_id, $subscriber->subscriber_id, 'https://bit.ly/PlNJ5d3', '$time', '$time');
         $sql = "
@@ -200,7 +202,8 @@ function createListFieldValue($dataAll, $subscribers, $fields){
                 (NULL, $fildIdFrom, $subscriber->subscriber_id, '$datum->From', '$time', '$time'),
                 (NULL, $fildIdEmail, $subscriber->subscriber_id, '$datum->Email', '$time', '$time'),
                 (NULL, $fildIdCode, $subscriber->subscriber_id, '$datum->Code', '$time', '$time'),
-                (NULL, $fildIdCarrier, $subscriber->subscriber_id, '$datum->Carrier', '$time', '$time');
+                (NULL, $fildIdCarrier, $subscriber->subscriber_id, '$datum->Carrier', '$time', '$time'),
+                (NULL, $fildIdBucket, $subscriber->subscriber_id, '$datum->Bucket', '$time', '$time');
             ";
 
         if(!runQuery($sql)){
