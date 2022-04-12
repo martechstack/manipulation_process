@@ -12,7 +12,7 @@
 
 AURORA:
 
-100 TM  - APR12_AURORA_TM_100
+100 TM  - APR12_AURORA_TM_100           used
 100 VZ - APR12_AURORA_VZ_100
 100 ATT - APR12_AURORA_ATT_100
 
@@ -41,8 +41,9 @@ ECLIPSE:
 1000 ATT - APR12_ECLIPSE_ATT_1000
  */
 
-$listName = 'APR12_AURORA_TM_100';
-$carrier = 'tmobile';
+$listName = 'APR12_AURORA_VZ_100';
+$carrier = 'verizon';
+//$carrier = 'tmobile';
 $limit = '100';
 
 $listUid = createList($listName);
@@ -69,7 +70,7 @@ if ($listId = getListIdByUid($listUid)) {
 
     createListFieldValue($dataAll, $subscribers, $fields);
 
-    echo 'DONE!';
+    echo PHP_EOL . 'DONE!' . PHP_EOL;
 }
 
 function timeNow(){ return date('Y-m-d G:i:s'); }
