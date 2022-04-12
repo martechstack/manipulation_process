@@ -1,6 +1,37 @@
 <?php
 
-for($i=1; $i<=3;$i++){
+/*
+TM_100_List_4
+TM_100_List_5
+TM_100_List_6
+TM_100_List_7
+TM_100_List_8
+TM_100_List_9
+TM_100_List_10
+
+VZ_100_List_1
+VZ_100_List_2
+VZ_100_List_3
+VZ_100_List_4
+VZ_100_List_5
+VZ_100_List_6
+VZ_100_List_7
+VZ_100_List_8
+VZ_100_List_9
+VZ_100_List_10
+
+ATT_100_List_1
+ATT_100_List_2
+ATT_100_List_3
+ATT_100_List_4
+ATT_100_List_5
+ATT_100_List_6
+ATT_100_List_7
+ATT_100_List_8
+ATT_100_List_9
+ATT_100_List_10*/
+
+for($i=4; $i<=10;$i++){
     $listName = 'TM_100_List_' . $i;
 //$carrier = 'verizon';
     $carrier = 'tmobile';
