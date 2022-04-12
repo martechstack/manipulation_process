@@ -4,9 +4,9 @@
  * APRIL:
 100 TM  - APR12_APRIL_TM_100 tmobile     used
 100 VZ - APR12_APRIL_VZ_100 verizon      used
-100 ATT - APR12_APRIL_ATT_100 not need
+100 ATT - APR12_APRIL_ATT_100            not need
 
-1000 TM  - APR12_APRIL_TM_1000
+1000 TM  - APR12_APRIL_TM_1000           used
 1000 VZ - APR12_APRIL_VZ_1000
 1000 ATT - APR12_APRIL_ATT_1000
 
@@ -41,7 +41,11 @@ ECLIPSE:
 1000 ATT - APR12_ECLIPSE_ATT_1000
  */
 
-$listUid = createList('APR12_APRIL_TM_1000');
+$listName = 'APR12_AURORA_TM_100';
+$carrier = 'tmobile';
+$limit = '100';
+
+$listUid = createList($listName);
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
     createListDefault($listId);
@@ -52,7 +56,7 @@ if ($listId = getListIdByUid($listUid)) {
         throw new Exception("Cannot find any fields with listId = $listId...");
     }
 
-    $dataAll = getDataAll();
+    $dataAll = getDataAll($carrier, $limit);
     if (empty($dataAll)) {
         throw new Exception('No data in table data_all...');
     }
@@ -192,12 +196,12 @@ function getListIdByUid($list_uid) {
 
     throw new Exception('Cannot get list id...');
 }
-function getDataAll() {
+function getDataAll($carrier, $limit) {
     $sql = "SELECT *
             FROM mailwizz.data_all
-            WHERE Carrier IN ('tmobile')
+            WHERE Carrier IN ('$carrier')
             AND Used IS NULL
-            LIMIT 1000
+            LIMIT $limit
             "; // LIMIT 1 OFFSET 0 AND Used != 1
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
