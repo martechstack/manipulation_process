@@ -1,5 +1,8 @@
 <?php
-echo array_rand(require 'buckets.php');die;
+
+$buckets = require 'buckets.php';
+echo $buckets[array_rand($buckets)];die;
+
 $listUid = createList();
 if ($listId = getListIdByUid($listUid)) {
     createListCompany($listId);
