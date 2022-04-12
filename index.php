@@ -158,8 +158,8 @@ function getDataAll() {
     $sql = "SELECT * 
             FROM mailwizz.data_all 
             WHERE Carrier NOT IN ('att')
-            AND Used NOT IN (1)
-            LIMIT 10"; // LIMIT 1 OFFSET 0
+            AND Used <> 1
+            LIMIT 10;"; // LIMIT 1 OFFSET 0
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj;
