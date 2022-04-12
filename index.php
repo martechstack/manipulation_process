@@ -196,7 +196,7 @@ function getDataAll() {
     $sql = "SELECT *
             FROM mailwizz.data_all
             WHERE Carrier IN ('tmobile')
-            AND Used IS NULL;
+            AND Used IS NULL
             LIMIT 100
             "; // LIMIT 1 OFFSET 0 AND Used != 1
     $result = runQuery($sql);
