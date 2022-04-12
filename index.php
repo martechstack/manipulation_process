@@ -23,7 +23,7 @@ AURORA:
 BLACKBIRD:
 
 100 TM  - APR12_BLACKBIRD_TM_100            used
-100 VZ - APR12_BLACKBIRD_VZ_100
+100 VZ - APR12_BLACKBIRD_VZ_100             used
 100 ATT - APR12_BLACKBIRD_ATT_100         not need
 
 1000 TM  - APR12_BLACKBIRD_TM_1000
@@ -41,7 +41,7 @@ ECLIPSE:
 1000 ATT - APR12_ECLIPSE_ATT_1000          not need
  */
 
-$listName = 'APR12_BLACKBIRD_VZ_100';
+$listName = 'APR12_ECLIPSE_VZ_100';
 $carrier = 'verizon';
 //$carrier = 'tmobile';
 $limit = '100';
