@@ -1,23 +1,24 @@
 <?php
 
 /*
-APR13_TM_1000_List_1
-APR13_TM_1000_List_2
-APR13_TM_1000_List_3
-APR13_TM_1000_List_4
-APR13_TM_1000_List_5
-APR13_TM_1000_List_6
-APR13_TM_1000_List_7
-APR13_TM_1000_List_8
-APR13_TM_1000_List_9
-APR13_TM_1000_List_10
-APR13_TM_1000_List_11
-APR13_TM_1000_List_12
+APR13_Verizon2_1000_List_1
+APR13_Verizon2_1000_List_2
+APR13_Verizon2_1000_List_3
+APR13_Verizon2_1000_List_4
+APR13_Verizon2_1000_List_5
+APR13_Verizon2_1000_List_6
+APR13_Verizon2_1000_List_7
+APR13_Verizon2_1000_List_8
+APR13_Verizon2_1000_List_9
+APR13_Verizon2_1000_List_10
+APR13_Verizon2_1000_List_11
+APR13_Verizon2_1000_List_12
+APR13_Verizon2_1000_List_12
 */
 for ($i = 1; $i <= 12; $i++) {
-    $listName = 'APR13_TM_1000_List_' . $i;
-//    $carrier = 'verizon';
-    $carrier = 'tmobile';
+    $listName = 'APR13_Verizon2_1000_List_' . $i;
+    $carrier = 'verizon';
+//    $carrier = 'tmobile';
 //    $carrier = 'att';
     $limit = '1000';
 
