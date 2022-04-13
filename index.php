@@ -15,11 +15,11 @@ APR13_TM_1000_List_11
 APR13_TM_1000_List_12
 */
 for ($i = 1; $i <= 12; $i++) {
-    $listName = 'APR13_TM_100_List_' . $i;
+    $listName = 'APR13_TM_1000_List_' . $i;
 //    $carrier = 'verizon';
     $carrier = 'tmobile';
 //    $carrier = 'att';
-    $limit = '100';
+    $limit = '1000';
 
     $listUid = createList($listName);
     if ($listId = getListIdByUid($listUid)) {
