@@ -1,37 +1,13 @@
 <?php
 
 /*
-APR13_VZ_List_1
-APR13_VZ_List_2
-APR13_VZ_List_3
-APR13_VZ_List_4
-APR13_VZ_List_5
-APR13_VZ_List_6
-APR13_VZ_List_7
-APR13_VZ_List_8
-APR13_VZ_List_9
-APR13_VZ_List_10
-APR13_VZ_List_11
-APR13_VZ_List_12
 
-APR13_ATT_List_1
-APR13_ATT_List_2
-APR13_ATT_List_3
-APR13_ATT_List_4
-APR13_ATT_List_5
-APR13_ATT_List_6
-APR13_ATT_List_7
-APR13_ATT_List_8
-APR13_ATT_List_9
-APR13_ATT_List_10
-APR13_ATT_List_11
-APR13_ATT_List_12
 */
 for ($i = 1; $i <= 12; $i++) {
-    $listName = 'APR13_VZ_List_' . $i;
-    $carrier = 'verizon';
+    $listName = 'APR13_ATT_List_' . $i;
+//    $carrier = 'verizon';
 //    $carrier = 'tmobile';
-//    $carrier = 'att';
+    $carrier = 'att';
     $limit = '1000';
 
     $listUid = createList($listName);
