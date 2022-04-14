@@ -20,9 +20,7 @@ ATT_1000_List_4
 //    $carrier = 'verizon';
 //    $carrier = 'tmobile';
 //    $carrier = 'att';
-create('VZ_5000_List_', 'verizon', 5000);
 create('TM_5000_List_', 'tmobile', 5000);
-create('ATT_1000_List_', 'att', 1000);
 
 function create($listName, $carrier, $limit) {
     for ($i = 1; $i <= 4; $i++) {
