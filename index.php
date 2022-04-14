@@ -1,57 +1,61 @@
 <?php
 
 /*
-APR13_Verizon2_1000_List_1
-APR13_Verizon2_1000_List_2
-APR13_Verizon2_1000_List_3
-APR13_Verizon2_1000_List_4
-APR13_Verizon2_1000_List_5
-APR13_Verizon2_1000_List_6
-APR13_Verizon2_1000_List_7
-APR13_Verizon2_1000_List_8
-APR13_Verizon2_1000_List_9
-APR13_Verizon2_1000_List_10
-APR13_Verizon2_1000_List_11
-APR13_Verizon2_1000_List_12
-APR13_Verizon2_1000_List_12
+VZ_5000_List_1
+VZ_5000_List_2
+VZ_5000_List_3
+VZ_5000_List_4
+
+TM_5000_List_1
+TM_5000_List_2
+TM_5000_List_3
+TM_5000_List_4
+
+
+ATT_1000_List_1
+ATT_1000_List_2
+ATT_1000_List_3
+ATT_1000_List_4
 */
-for ($i = 1; $i <= 12; $i++) {
-    $listName = 'APR13_Verizon2_1000_List_' . $i;
-    $carrier = 'verizon';
+//    $carrier = 'verizon';
 //    $carrier = 'tmobile';
 //    $carrier = 'att';
-    $limit = '1000';
+create('VZ_5000_List_', 'verizon', 5000);
+create('TM_5000_List_', 'tmobile', 5000);
+create('ATT_1000_List_', 'att', 1000);
 
-    $listUid = createList($listName);
-    if ($listId = getListIdByUid($listUid)) {
-        createListCompany($listId);
-        createListDefault($listId);
-        createListNotification($listId);
-        createListFields($listId);
-        $fields = getFieldsByListId($listId);
-        if (empty($fields)) {
-            throw new Exception("Cannot find any fields with listId = $listId...");
+function create($listName, $carrier, $limit) {
+    for ($i = 1; $i <= 4; $i++) {
+        $listName = $listName . $i;
+
+        $listUid = createList($listName);
+        if ($listId = getListIdByUid($listUid)) {
+            createListCompany($listId);
+            createListDefault($listId);
+            createListNotification($listId);
+            createListFields($listId);
+            $fields = getFieldsByListId($listId);
+            if (empty($fields)) {
+                throw new Exception("Cannot find any fields with listId = $listId...");
+            }
+
+            $dataAll = getDataAll($carrier, $limit);
+            if (empty($dataAll)) {
+                throw new Exception('No data in table data_all...');
+            }
+
+            $createdSubscribersCount = createSubscribers($listId, $dataAll);
+            $subscribers = getSubscribersByListId($listId);
+            if (empty($subscribers)) {
+                throw new Exception("Cannot find any subscriber with listId = $listId...");
+            }
+
+            createListFieldValue($dataAll, $subscribers, $fields);
+
+            echo PHP_EOL . 'DONE!' . PHP_EOL;
         }
-
-        $dataAll = getDataAll($carrier, $limit);
-        if (empty($dataAll)) {
-            throw new Exception('No data in table data_all...');
-        }
-
-        $createdSubscribersCount = createSubscribers($listId, $dataAll);
-        $subscribers = getSubscribersByListId($listId);
-        if (empty($subscribers)) {
-            throw new Exception("Cannot find any subscriber with listId = $listId...");
-        }
-
-        createListFieldValue($dataAll, $subscribers, $fields);
-
-        echo PHP_EOL . 'DONE!' . PHP_EOL;
     }
 }
-
-
-
 function timeNow(){ return date('Y-m-d G:i:s'); }
 function getConnect() {
     $config = require 'config.php';
@@ -290,3 +294,10 @@ function getFieldsByListId($listId) {
     return $ar;
 }
 ?>
+<!---->
+<!--85.114.142.201:59100:yuriilevkovich: WQ7gr7ZdKp:Богдан Матат-->
+<!--85.114.142.117:59100:yuriilevkovich: WQ7gr7ZdKp:Anna Матат-->
+<!--93.186.200.187:59100:yuriilevkovich: WQ7gr7ZdKp:Tato-->
+<!--179.61.134.12:59100:yuriilevkovich: WQ7gr7ZdKp:Mama-->
+<!--191.101.198.150:59100:yuriilevkovich: WQ7gr7ZdKp:Yulialevkovich-->
+<!--191.101.100.20:59100:yuriilevkovich: WQ7gr7ZdKp:VovaFilipovich-->
