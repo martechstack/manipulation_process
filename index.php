@@ -20,13 +20,16 @@ ATT_1000_List_4
 //    $carrier = 'verizon';
 //    $carrier = 'tmobile';
 //    $carrier = 'att';
-create('TM_5000_List_', 'tmobile', 5000);
+
+const CARRIER_VERIZON = 'verizon';
+const CARRIER_TMOBILE = 'tmobile';
+const CARRIER_ATT = 'att';
+
+create('ATT_1000_List_', CARRIER_ATT, 1000);
 
 function create($listName, $carrier, $limit) {
     for ($i = 1; $i <= 4; $i++) {
-        $listName = $listName . $i;
-
-        $listUid = createList($listName);
+        $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
             createListDefault($listId);
@@ -42,7 +45,7 @@ function create($listName, $carrier, $limit) {
                 throw new Exception('No data in table data_all...');
             }
 
-            $createdSubscribersCount = createSubscribers($listId, $dataAll);
+            createSubscribers($listId, $dataAll);
             $subscribers = getSubscribersByListId($listId);
             if (empty($subscribers)) {
                 throw new Exception("Cannot find any subscriber with listId = $listId...");
