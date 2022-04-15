@@ -1,7 +1,6 @@
 <?php
 
 /*
-...
 VZ_APR15_1000_List_1
 VZ_APR15_1000_List_2
 VZ_APR15_1000_List_3
