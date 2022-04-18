@@ -1,38 +1,47 @@
 <?php
 
 /*
-VZ_APR15_1000_List_1
-VZ_APR15_1000_List_2
-VZ_APR15_1000_List_3
-VZ_APR15_1000_List_4
-VZ_APR15_1000_List_5
-VZ_APR15_1000_List_6
-VZ_APR15_1000_List_7
-VZ_APR15_1000_List_8
-VZ_APR15_1000_List_9
-VZ_APR15_1000_List_10
+APR18_TM_2000_List_1
+APR18_TM_2000_List_2
+APR18_TM_2000_List_3
+APR18_TM_2000_List_4
+APR18_TM_2000_List_5
+APR18_TM_2000_List_6
+APR18_TM_2000_List_7
+APR18_TM_2000_List_8
+APR18_TM_2000_List_9
+APR18_TM_2000_List_10
 
-TM_APR15_1000_List_1
-TM_APR15_1000_List_2
-TM_APR15_1000_List_3
-TM_APR15_1000_List_4
-TM_APR15_1000_List_5
-TM_APR15_1000_List_6
-TM_APR15_1000_List_7
-TM_APR15_1000_List_8
-TM_APR15_1000_List_9
-TM_APR15_1000_List_10
+APR18_VZ_2000_List_1
+APR18_VZ_2000_List_2
+APR18_VZ_2000_List_3
+APR18_VZ_2000_List_4
+APR18_VZ_2000_List_5
+APR18_VZ_2000_List_6
+APR18_VZ_2000_List_7
+APR18_VZ_2000_List_8
+APR18_VZ_2000_List_9
+APR18_VZ_2000_List_10
+
+APR18_ATT_100_List_1
+APR18_ATT_100_List_2
+APR18_ATT_100_List_3
+APR18_ATT_100_List_4
+
+APR18_ATT_1000_List_1
+APR18_ATT_1000_List_2
+APR18_ATT_1000_List_3
+APR18_ATT_1000_List_4
 */
-//    $carrier = 'verizon';
-//    $carrier = 'tmobile';
-//    $carrier = 'att';
 
 const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('VZ_APR15_1000_List_', 10, CARRIER_VERIZON, 1000);
-create('TM_APR15_1000_List_', 10, CARRIER_TMOBILE, 1000);
+create('APR18_TM_2000_List_', 10, CARRIER_TMOBILE, 2000);
+create('APR18_VZ_2000_List_', 10, CARRIER_VERIZON, 2000);
+create('APR18_ATT_100_List_', 4, CARRIER_ATT, 100);
+create('APR18_ATT_1000_List_', 4, CARRIER_ATT, 1000);
 
 function create($listName, $listCount, $carrier, $limit) {
     for ($i = 1; $i <= $listCount; $i++) {
