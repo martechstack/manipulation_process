@@ -24,10 +24,11 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A19_TM_VZ_2K_L', 12, CARRIER_TMOBILE, 100);
+create('A19_TM_VZ_2K_L', 11, CARRIER_TMOBILE, 100);
 
 function create($listName, $listCount, $carrier, $limit) {
-    for ($i = 1; $i <= $listCount; $i++) {
+    //change 2 to 1
+    for ($i = 2; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
