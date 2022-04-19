@@ -42,7 +42,10 @@ function create($listName, $listCount, $carrier, $limit) {
             // todo
             $dataAll1 = getDataAll(CARRIER_TMOBILE, 1000);
             $dataAll2 = getDataAll(CARRIER_VERIZON, 1000);
-            $dataAll = array_merge($dataAll1, $dataAll2);
+            for($i = 0; $i < 1000; $i++) {
+                $dataAll[] = $dataAll1[$i];
+                $dataAll[] = $dataAll2[$i];
+            }
             if (empty($dataAll)) {
                 throw new Exception('No data in table data_all...');
             }
