@@ -24,10 +24,7 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('APR19_TM_100_List_', 4, CARRIER_TMOBILE, 100);
-create('APR19_ATT_100_List_', 4, CARRIER_ATT, 100);
-create('APR19_VZ_100_List_', 4, CARRIER_VERIZON, 100);
-create('A19_ATT_1K_L', 4, CARRIER_ATT, 1000);
+create('A19_TM_VZ_2K_L', 12, CARRIER_TMOBILE, 100);
 
 function create($listName, $listCount, $carrier, $limit) {
     for ($i = 1; $i <= $listCount; $i++) {
@@ -42,7 +39,10 @@ function create($listName, $listCount, $carrier, $limit) {
                 throw new Exception("Cannot find any fields with listId = $listId...");
             }
 
-            $dataAll = getDataAll($carrier, $limit);
+            // todo
+            $dataAll1 = getDataAll(CARRIER_TMOBILE, 1000);
+            $dataAll2 = getDataAll(CARRIER_VERIZON, 1000);
+            $dataAll = array_merge($dataAll1, $dataAll2);
             if (empty($dataAll)) {
                 throw new Exception('No data in table data_all...');
             }
