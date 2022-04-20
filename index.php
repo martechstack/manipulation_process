@@ -24,11 +24,10 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A20_TM_VZ_2K_L', 12, CARRIER_TMOBILE, 2000);
+create('A20_TM_VZ_2K_L', 11, CARRIER_TMOBILE, 2000);
 
 function create($listName, $listCount, $carrier, $limit) {
-    //change 2 to 1
-    for ($i = 2; $i <= $listCount; $i++) {
+    for ($i = 1; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
@@ -43,9 +42,9 @@ function create($listName, $listCount, $carrier, $limit) {
             // todo
             $dataAll1 = getDataAll(CARRIER_TMOBILE, 1000);
             $dataAll2 = getDataAll(CARRIER_VERIZON, 1000);
-            for($i = 0; $i < 1000; $i++) {
-                $dataAll[] = $dataAll1[$i];
-                $dataAll[] = $dataAll2[$i];
+            for($j = 0; $j < 1000; $j++) {
+                $dataAll[] = $dataAll1[$j];
+                $dataAll[] = $dataAll2[$j];
             }
             if (empty($dataAll)) {
                 throw new Exception('No data in table data_all...');
@@ -301,10 +300,3 @@ function getFieldsByListId($listId) {
     return $ar;
 }
 ?>
-<!---->
-<!--85.114.142.201:59100:yuriilevkovich: WQ7gr7ZdKp:Богдан Матат-->
-<!--85.114.142.117:59100:yuriilevkovich: WQ7gr7ZdKp:Anna Матат-->
-<!--93.186.200.187:59100:yuriilevkovich: WQ7gr7ZdKp:Tato-->
-<!--179.61.134.12:59100:yuriilevkovich: WQ7gr7ZdKp:Mama-->
-<!--191.101.198.150:59100:yuriilevkovich: WQ7gr7ZdKp:Yulialevkovich-->
-<!--191.101.100.20:59100:yuriilevkovich: WQ7gr7ZdKp:VovaFilipovich-->
