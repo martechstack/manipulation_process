@@ -24,7 +24,7 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A19_TM_VZ_2K_L', 11, CARRIER_TMOBILE, 100);
+create('A20_TM_VZ_2K_L', 12, CARRIER_TMOBILE, 2000);
 
 function create($listName, $listCount, $carrier, $limit) {
     //change 2 to 1
