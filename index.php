@@ -40,6 +40,7 @@ function create($listName, $listCount, $carrier, $limit) {
             }
 
             // todo
+            $dataAll = [];
             $dataAll1 = getDataAll(CARRIER_TMOBILE, 1000);
             $dataAll2 = getDataAll(CARRIER_VERIZON, 1000);
             for($j = 0; $j < 1000; $j++) {
