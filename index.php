@@ -1,9 +1,9 @@
 <?php
 
 /*
-For Tests:
+4 lista na TM po 100
+4 lista na VZ po 100
 
-For Mailing:
 A19_TM_VZ_2K_L1
 A19_TM_VZ_2K_L2
 A19_TM_VZ_2K_L3
@@ -24,10 +24,12 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A20_TM_VZ_2K_L', 12, CARRIER_TMOBILE, 2000);
+create('A20_TM_100_L', 4, CARRIER_TMOBILE, 100);
+create('A20_VZ_100_L', 4, CARRIER_VERIZON, 100);
+create('A20_TM_VZ_2K_L', 7, CARRIER_TMOBILE, 2000, true);
 
-function create($listName, $listCount, $carrier, $limit) {
-    for ($i = 3; $i <= $listCount; $i++) {
+function create($listName, $listCount, $carrier, $limit, $random = false) {
+    for ($i = 1; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
@@ -39,14 +41,18 @@ function create($listName, $listCount, $carrier, $limit) {
                 throw new Exception("Cannot find any fields with listId = $listId...");
             }
 
-            // todo
-            $dataAll = [];
-            $dataAll1 = getDataAll(CARRIER_TMOBILE, 1000);
-            $dataAll2 = getDataAll(CARRIER_VERIZON, 1000);
-            for($j = 0; $j < 1000; $j++) {
-                $dataAll[] = $dataAll1[$j];
-                $dataAll[] = $dataAll2[$j];
+            if ($random) {
+                $dataAll = [];
+                $dataAll1 = getDataAll(CARRIER_TMOBILE, $limit / 2);
+                $dataAll2 = getDataAll(CARRIER_VERIZON, $limit / 2);
+                for($j = 0; $j < $limit / 2; $j++) {
+                    $dataAll[] = $dataAll1[$j];
+                    $dataAll[] = $dataAll2[$j];
+                }
+            } else {
+                $dataAll = getDataAll($carrier, $limit);
             }
+
             if (empty($dataAll)) {
                 throw new Exception('No data in table data_all...');
             }
