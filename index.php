@@ -24,9 +24,7 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A20_TM_100_L', 4, CARRIER_TMOBILE, 100);
-create('A20_VZ_100_L', 4, CARRIER_VERIZON, 100);
-create('A20_TM_VZ_2K_L', 7, CARRIER_TMOBILE, 2000, true);
+create('A21_TM_VZ_2K_L', 10, CARRIER_TMOBILE, 2000, true);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
     for ($i = 1; $i <= $listCount; $i++) {
