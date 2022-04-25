@@ -1,30 +1,10 @@
 <?php
 
-/*
-4 lista na TM po 100
-4 lista na VZ po 100
-
-A19_TM_VZ_2K_L1
-A19_TM_VZ_2K_L2
-A19_TM_VZ_2K_L3
-A19_TM_VZ_2K_L4
-A19_TM_VZ_2K_L5
-A19_TM_VZ_2K_L6
-A19_TM_VZ_2K_L7
-A19_TM_VZ_2K_L8
-A19_TM_VZ_2K_L9
-A19_TM_VZ_2K_L10
-A19_TM_VZ_2K_L11
-A19_TM_VZ_2K_L12
-v odnom liste i VZ (1000) i TM (1000)
-
-*/
-
 const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('A21_TM_VZ_2K_L', 4, CARRIER_VERIZON, 1000, false);
+create('A25_VZ_1000_', 10, CARRIER_VERIZON, 1000, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
     for ($i = 1; $i <= $listCount; $i++) {
