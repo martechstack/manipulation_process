@@ -5,6 +5,7 @@ const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
 create('A25_VZ_1000_', 10, CARRIER_VERIZON, 1000, false);
+create('A25_TM_1000_', 10, CARRIER_TMOBILE, 1000, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
     for ($i = 1; $i <= $listCount; $i++) {
@@ -43,7 +44,7 @@ function create($listName, $listCount, $carrier, $limit, $random = false) {
 
             createListFieldValue($dataAll, $subscribers, $fields);
 
-            echo PHP_EOL . 'DONE!' . PHP_EOL;
+            echo PHP_EOL . $i . '. DONE!' . PHP_EOL;
         }
     }
 }
