@@ -52,7 +52,7 @@ function deleteList($listId){
 }
 function getListIdsByStrConsistName($str): array {
     $ar = [];
-    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE mailwizz.name='%$str%'";
+    $sql = "SELECT list_id FROM mailwizz.mw_list WHERE mailwizz.name LIKE '%$str%'";
     $result = runQuery($sql);
     while ($obj = $result->fetch_object()) {
         $ar[] = $obj->list_id;
