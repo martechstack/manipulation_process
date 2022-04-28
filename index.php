@@ -7,7 +7,8 @@ const CARRIER_ATT = 'att';
 create('A28_VZ_2500_', 120, CARRIER_VERIZON, 2500, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
-    for ($i = 1; $i <= $listCount; $i++) {
+    //todo delete it
+    for ($i = 7; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
