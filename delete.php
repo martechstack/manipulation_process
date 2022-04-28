@@ -1,7 +1,7 @@
 <?php
 
 $strings = [
-    'A26',
+    'A27',
 ];
 
 foreach ($strings as $uid) {
