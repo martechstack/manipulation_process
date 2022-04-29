@@ -5,11 +5,11 @@ const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
 create('A29_VZ_100_', 10, CARRIER_VERIZON, 100, false);
-create('A28_VZ_2500_', 120, CARRIER_VERIZON, 2500, false);
+//create('A28_VZ_2500_', 120, CARRIER_VERIZON, 2500, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
     //todo delete it
-    for ($i = 22; $i <= $listCount; $i++) {
+    for ($i = 1; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
@@ -45,7 +45,7 @@ function create($listName, $listCount, $carrier, $limit, $random = false) {
 
             createListFieldValue($dataAll, $subscribers, $fields);
 
-            echo PHP_EOL . $i . '. DONE!' . PHP_EOL;
+            echo PHP_EOL . $listName . $i . ". DONE!" . PHP_EOL;
         }
     }
 }
