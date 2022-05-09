@@ -7,7 +7,8 @@ const CARRIER_ATT = 'att';
 create('09_MAY_TM_1000_', 10, CARRIER_TMOBILE, 1000, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
-    for ($i = 1; $i <= $listCount; $i++) {
+    //todo
+    for ($i = 3; $i <= $listCount; $i++) {
         $listUid = createList($listName . $i);
         if ($listId = getListIdByUid($listUid)) {
             createListCompany($listId);
