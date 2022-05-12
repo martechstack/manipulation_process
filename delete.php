@@ -14,7 +14,7 @@ foreach ($strings as $uid) {
             deleteListField($listId);
             deleteList($listId);
 
-            echo PHP_EOL . " Deleted: $uid " . PHP_EOL;
+            echo PHP_EOL . " Deleted: $listId " . PHP_EOL;
         }
     }
 

@@ -175,9 +175,10 @@ function getListIdByUid($list_uid) {
     throw new Exception('Cannot get list id...');
 }
 function getDataAll($carrier, $limit) {
+    // todo WHERE Carrier IN ('$carrier')
     $sql = "SELECT *
             FROM mailwizz.data_all
-            WHERE Carrier IN ('$carrier')
+            WHERE Bucket IN ('$carrier')
             AND Used IS NULL
             LIMIT $limit
             "; // LIMIT 1 OFFSET 0 AND Used != 1
