@@ -1,10 +1,8 @@
 <?php
 
 $strings = [
-    'test',
-    'A28',
-    'A29',
-    'VZ_100',
+    'ATT',
+    'MAY',
 ];
 
 foreach ($strings as $uid) {

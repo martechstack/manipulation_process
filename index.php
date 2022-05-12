@@ -4,7 +4,10 @@ const CARRIER_VERIZON = 'verizon';
 const CARRIER_TMOBILE = 'tmobile';
 const CARRIER_ATT = 'att';
 
-create('11_MAY_TM_1000_', 10, CARRIER_TMOBILE, 1000, false);
+create('12_MAY_VZ_100_', 10, CARRIER_VERIZON, 100, false);
+create('12_MAY_ATT_100_', 10, CARRIER_ATT, 100, false);
+create('12_MAY_VZ_1000_', 10, CARRIER_VERIZON, 1000, false);
+create('12_MAY_TM_1000_', 12, CARRIER_TMOBILE, 1000, false);
 
 function create($listName, $listCount, $carrier, $limit, $random = false) {
     for ($i = 1; $i <= $listCount; $i++) {
