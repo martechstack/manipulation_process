@@ -1,8 +1,7 @@
 <?php
 
 $strings = [
-    'ATT',
-    'MAY',
+    '12_MAY',
 ];
 
 foreach ($strings as $uid) {
